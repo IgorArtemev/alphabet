@@ -18,6 +18,7 @@ int dialog() {
 		print("5 - check entry of character in the alphabet");
 		print("6 - coding of string");
 		print("7 - decoding of string");
+		print("8 - adding 'a' and 'qwerty' and 'rtehsd'");
 		int d = 0;
 		input(d);
 		return d;
@@ -27,7 +28,7 @@ int dialog() {
 		switch (d) {
 		case 0: return 0;
 		case 1: {
-			a.print(std::cout);
+			cout<<a;
 			break;
 		}
 		case 2: {
@@ -68,14 +69,14 @@ int dialog() {
 				break;
 			}
 			}
-			a.print(std::cout);
+			cout<<a;
 			break;
 		}
 		case 3:{
 			char s;
 			print("Enter charater:");
 			cin>>s;
-			try{a.add(s);
+			try{a+=s;
 			}
 			 catch(std::exception &ex){
                 std::cout<<ex.what()<<std::endl;
@@ -85,8 +86,8 @@ int dialog() {
 		case 4:{
 			alphabet tmp1(0);
 			try{
-			tmp1.in();
-			a.total(tmp1);
+			cin>>tmp1;
+			a+=tmp1;
 			}
 			catch(std::exception &ex){
             std::cout<<ex.what()<<std::endl;
@@ -95,12 +96,12 @@ int dialog() {
 		}
 		case 5:{
 			char s;
-			print("Enter charater:");
+			print("Enter character:");
 			cin>>s;
-			if(a.entry(s)!=-1)
-				print("This characteк is in the alphabet");
+			if(a(s)!=-1)
+				print("This character is in the alphabet");
 			else
-				print("This characteк is not in the alphabet");
+				print("This character is not in the alphabet");
 			break;
 		}
 		case 6:{
@@ -113,11 +114,11 @@ int dialog() {
 			print("Enter the number:");
 			input(n);
 			try{a.cod(s,n);
-			print(s);
 			}
 			catch(std::exception &ex){
                 std::cout<<ex.what()<<std::endl;
             	}
+			print(s);
 			break;
 		}
 		case 7:{
@@ -131,11 +132,20 @@ int dialog() {
 			input(n);
 			try{
 			a.decod(s,n);
-			print(s);
 			}
 			catch(std::exception &ex){
                 std::cout<<ex.what()<<std::endl;
             	}
+			print(s);
+			break;
+		}
+		case 8:{
+			char ch='a';
+			alphabet b("qwerty") ;
+			alphabet c("rtehsd");
+			alphabet s;
+			s=a+ch+b+c;
+			cout<<s;
 			break;
 		}
 		default: {
@@ -145,9 +155,15 @@ int dialog() {
 		return 1;
 	}
 	int main(){
-	alphabet a;
+	alphabet a("abc");
+	char c1('d');
+	char c2('k');
+	a+=c1;
+	cout<<a;
+	alphabet b("edfa");
+	b=c2+a+b;
+	cout<<b;
 	int q = 0;
-	a.print(std::cout);
 	do {
 		int d = dialog();
 		q=menu(d, a);

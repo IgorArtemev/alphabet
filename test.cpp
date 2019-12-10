@@ -1,4 +1,4 @@
-z#include <gtest/gtest.h>
+#include <gtest/gtest.h>
 #include "alphabet.cpp"
 using namespace Alphabet;
 TEST(alphabetConst,DefConst){
@@ -48,25 +48,25 @@ TEST(alphabetConst,StrConst){
 TEST(alphabetMethods,methods){
 	char s[]="abcd";
 	alphabet a(s);
-	a.add('	');
+	a+=('	');
 	ASSERT_EQ(5,a.getSZ());
-	a.add('3');
+	a+=('3');
 	ASSERT_EQ(6,a.getSZ());
-	a.add(' ');
+	a+=(' ');
 	ASSERT_EQ(7,a.getSZ());
-	a.add('9');
+	a+=('9');
 	ASSERT_EQ(8,a.getSZ());
 	char s1[]="alphabet";
 	char s2[]="abdr";
 	alphabet a2(s1);
 	alphabet a3(s2);
-	a2.total(a3);
+	a2+=a3;
 	ASSERT_EQ(9,a2.getSZ());
 	char s3[]="alphabet";
 	char s4[]="alph";
 	alphabet a4(s3);
 	alphabet a5(s4);
-	a4.total(a5);
+	a4+=(a5);
 	ASSERT_EQ(9,a2.getSZ());
 }
 TEST(alphabetConst,TestExc){
@@ -76,8 +76,8 @@ TEST(alphabetConst,TestExc){
 	char s[]="alphabetd";
     alphabet a4(s);
 	char s2[]="alphabetd32";
-	ASSERT_ANY_THROW(a4.add('a'));
-	ASSERT_ANY_THROW(a4.add('d'));
+	ASSERT_ANY_THROW(a4+=('a'));
+	ASSERT_ANY_THROW(a4+=('d'));
 	ASSERT_ANY_THROW(a4.cod(s2,1));
 	ASSERT_ANY_THROW(a4.decod(s2,1));
 }

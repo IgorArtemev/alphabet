@@ -5,6 +5,18 @@
 using namespace Alphabet;
 using namespace std;
 namespace Alphabet{
+     char* getstr() {
+		char* ptr = (char*)malloc(1);
+		char buf[256];
+		int len = 0;
+        std::cin.ignore(1);
+		cin.getline (buf,256);
+		len += strlen(buf);
+		ptr = (char*)realloc(ptr, len + 1);
+		strcat(ptr, buf);
+        ptr[len+1]='\0';
+		return ptr;
+	}
     template <class T>
 	int input(T& number) {
     int res, err_flag = 0;
@@ -41,6 +53,10 @@ namespace Alphabet{
             a[i]=i+32;
         }
     };
+    alphabet::alphabet(char s){
+        size=1;
+        a[0]=s;
+    }
     alphabet::alphabet(int N){
         if (N<0 || N>256 || N>MAX){
             throw std::runtime_error("Incorect size");
@@ -54,57 +70,43 @@ namespace Alphabet{
         int j=0;
         alphabet tmp(0);
         for(int i=0;i<strlen(str);++i){
-            if (tmp.entry(str[i])==-1){
+            if (tmp(str[i])==-1){
                 if (j==MAX||j>255){
                     throw std::runtime_error("Incorect size");
                 }
-                tmp.add(str[i]);
+                tmp+=str[i];
                 a[j]=str[i];
                 ++j;   
             }
         }
         size=j;
     };
-    alphabet& alphabet::in(){
-        int n,s;
-        cout<<"Enter size of alphabet:"<<endl;
-        s=input(n);
-        if (n<0 || n>MAX || n>80){
-                throw std::runtime_error("Incorect size");
-        }
-        if(s){
-            size=n;
-            char ch;
-            for (int i=0;i<n;++i){
-            cout<<"Enter "<<n-i<<" symbols:"<<endl;
-                cin>>ch;
-                if (cin.good()){
-                    if(!(entry(ch)==-1)){
-                        cout<<"This  character is already written in the alphabet"<<endl;
-                        --i;
-                    }
-                    else{
-                        a[i]=ch;
-                    }
-                }
-                else
-                    break;
-            }
-        }
-        return *this;
+    std::istream & operator >>(std::istream& i, alphabet& a){
+       char* str=getstr();
+       if (i.fail()) {
+			i.setstate(std::ios::failbit);
+		}
+        a=str;
+        return i;
     };
-    std::ostream & alphabet::print(std::ostream &s) const{
-        for(int i=0;i<size;++i)
-            s<<a[i]<<' ';
+    std::ostream & operator <<(std::ostream& s, const alphabet & a){
+        for(int i=0;i<a.size;++i)
+            s<<a.a[i]<<' ';
         s<<endl;
         return s;
     };
-    alphabet& alphabet::total(const alphabet& s){
+    const alphabet operator +(const alphabet& l, const alphabet& r){
+        alphabet tmp;
+        tmp=l;
+        tmp+=r;
+        return tmp;
+    }
+    alphabet& alphabet::operator +=(const alphabet& s){
         int k=size;
         for (int i=0;i<s.size;++i){
             if (k==MAX)
                     throw std::runtime_error("Too many symbols");
-            if ((entry(s.a[i])==-1)){
+            if (((*this)(s.a[i])==-1)){
                 a[k]=s.a[i];
                 ++k;
             }
@@ -112,8 +114,8 @@ namespace Alphabet{
         size=k;
         return *this;
     }
-    alphabet& alphabet::add(char s){
-        if((entry(s)!=-1))
+    alphabet& alphabet::operator +=(char s){
+        if(((*this)(s)!=-1))
           throw  runtime_error("This  character is already written in the alphabet");
         if(size==MAX)
           throw  runtime_error("The aphabet is full");
@@ -125,7 +127,7 @@ namespace Alphabet{
         int k;
         if (n>0){
         for (int i=0; i<strlen(str); ++i){
-            k=entry(str[i]);
+            k=(*this)(str[i]);
             if(k==-1){
               throw  runtime_error("No one or more character in the alphabet");
             }
@@ -136,7 +138,7 @@ namespace Alphabet{
         }
         else{
             for (int i=0; i<strlen(str); ++i){
-            k=entry(str[i]);
+            k=(*this)(str[i]);
             if(k==-1){
               throw  runtime_error("No one or more character in the alphabet");
             }
@@ -150,7 +152,7 @@ namespace Alphabet{
         int k;
         if (n<0){
         for (int i=0; i<strlen(str); ++i){
-            k=entry(str[i]);
+            k=(*this)(str[i]);
             if(k==-1){
               throw  runtime_error("No one or more character in the alphabet");
             }
@@ -161,7 +163,7 @@ namespace Alphabet{
         }
         else{
             for (int i=0; i<strlen(str); ++i){
-            k=entry(str[i]);
+            k=(*this)(str[i]);
             if(k==-1){
               throw  runtime_error("No one or more character in the alphabet");
             }
@@ -171,7 +173,7 @@ namespace Alphabet{
         }
         }
     };
-    int alphabet::entry(char s) const{
+    int alphabet::operator ()(char s) const{
         for (int i=0; i<size; ++i){
             if (a[i]==s){
                 return i;
