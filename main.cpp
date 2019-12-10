@@ -18,7 +18,6 @@ int dialog() {
 		print("5 - check entry of character in the alphabet");
 		print("6 - coding of string");
 		print("7 - decoding of string");
-		print("8 - adding 'a' and 'qwerty' and 'rtehsd'");
 		int d = 0;
 		input(d);
 		return d;
@@ -56,9 +55,8 @@ int dialog() {
 				break;
 			}
 			case 2:{
-				char s[256];
-				std::cin.ignore(1);
-				cin.getline (s,256);
+				char *s;
+				s=getstr();
 				try{
 				alphabet tmp(s);
 				a=tmp;
@@ -74,7 +72,7 @@ int dialog() {
 		}
 		case 3:{
 			char s;
-			print("Enter charater:");
+			print("Enter character:");
 			cin>>s;
 			try{a+=s;
 			}
@@ -90,13 +88,13 @@ int dialog() {
 			a+=tmp1;
 			}
 			catch(std::exception &ex){
-            std::cout<<ex.what()<<std::endl;
+            	std::cout<<ex.what()<<std::endl;
             }
 			break;
 		}
 		case 5:{
 			char s;
-			print("Enter character:");
+			print("Enter charater:");
 			cin>>s;
 			if(a(s)!=-1)
 				print("This character is in the alphabet");
@@ -105,12 +103,10 @@ int dialog() {
 			break;
 		}
 		case 6:{
-			char s[256];
-			char e;
+			char *s;
 			int n;
 			print("Enter the string:");
-			std::cin.ignore(1);
-			cin.getline (s,256);
+			s=getstr();
 			print("Enter the number:");
 			input(n);
 			try{a.cod(s,n);
@@ -122,12 +118,10 @@ int dialog() {
 			break;
 		}
 		case 7:{
-			char s[256];
-			char e;
+			char *s;
 			int n;
 			print("Enter the string:");
-			std::cin.ignore(1);
-			cin.getline (s,256);
+			s=getstr();
 			print("Enter the number:");
 			input(n);
 			try{
@@ -139,15 +133,6 @@ int dialog() {
 			print(s);
 			break;
 		}
-		case 8:{
-			char ch='a';
-			alphabet b("qwerty") ;
-			alphabet c("rtehsd");
-			alphabet s;
-			s=a+ch+b+c;
-			cout<<s;
-			break;
-		}
 		default: {
 			print("incorrect choice");
 		}
@@ -155,15 +140,9 @@ int dialog() {
 		return 1;
 	}
 	int main(){
-	alphabet a("abc");
-	char c1('d');
-	char c2('k');
-	a+=c1;
-	cout<<a;
-	alphabet b("edfa");
-	b=c2+a+b;
-	cout<<b;
+	alphabet a;
 	int q = 0;
+	cout<<a;;
 	do {
 		int d = dialog();
 		q=menu(d, a);

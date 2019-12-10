@@ -71,8 +71,8 @@ TEST(alphabetMethods,methods){
 }
 TEST(alphabetConst,TestExc){
     ASSERT_ANY_THROW(alphabet a1(-10));
-    ASSERT_ANY_THROW(alphabet a2(101));
-    ASSERT_ANY_THROW(alphabet a3(256)); 
+    ASSERT_ANY_THROW(alphabet a2(301));
+    ASSERT_ANY_THROW(alphabet a3(257)); 
 	char s[]="alphabetd";
     alphabet a4(s);
 	char s2[]="alphabetd32";

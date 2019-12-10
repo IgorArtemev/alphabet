@@ -3,15 +3,19 @@
 #include <iostream>
 namespace Alphabet{
     class alphabet{
-    private:
-        static const int MAX=100;
+    private:;
         int size;
-        char a[MAX];
+        char *a;
     public:
         alphabet();
         alphabet(char);
         alphabet(int N);
-        alphabet(char str[]);
+        alphabet(char* str);
+        alphabet(const alphabet&);
+        alphabet(alphabet&&);
+        alphabet& operator =(const alphabet&);
+        alphabet& operator =(alphabet&&);
+        ~alphabet() {delete[] a;};
         friend std::istream & operator >>(std::istream&, alphabet &);
         friend std::ostream & operator <<(std::ostream&, const alphabet &);
         friend const alphabet operator +(const alphabet& l,const alphabet& r);
